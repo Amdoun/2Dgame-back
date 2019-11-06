@@ -20,7 +20,7 @@ const emitPlayers = socket => {
 }
 
 io.on("connection", socket => {
-  console.log("New client connected");
+  console.log(`Client ${socket.id} connected`);
   players.push({id: socket.id, position: {x:50, y:50}})
   setInterval(() => emitPlayers(socket), 1000/60);
   socket.on("position", data => {
@@ -30,7 +30,8 @@ io.on("connection", socket => {
     }
   })
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    players = players.filter( element => element.id !== socket.id )
+    console.log(`Client ${socket.id} disconnected`);
   });
 });
 
