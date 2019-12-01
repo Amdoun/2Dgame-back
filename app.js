@@ -1,7 +1,8 @@
+"use strict";
+
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-const axios = require("axios");
 
 const port = process.env.PORT || 4001;
 const index = require("./server/routes/index");
@@ -24,7 +25,7 @@ io.on("connection", socket => {
   players.push({id: socket.id, position: {x:50, y:50}})
   setInterval(() => emitPlayers(socket), 1000/60);
   socket.on("position", data => {
-    for (i = 0; i < players.length; i++){
+    for (var i = 0; i < players.length; i++){
       if (players[i].id == socket.id)
         players[i].position = data
     }
